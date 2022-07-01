@@ -1,0 +1,738 @@
+Last login: Fri Jul  1 10:15:28 on ttys000
+
+The default interactive shell is now zsh.
+To update your account to use zsh, please run `chsh -s /bin/zsh`.
+For more details, please visit https://support.apple.com/kb/HT208050.
+(base) anrinoMacBook-Air:~ koizumianri$ SHOW databases;
+-bash: SHOW: command not found
+(base) anrinoMacBook-Air:~ koizumianri$ mysql --user=root --password
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 14
+Server version: 8.0.29 Homebrew
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> SHOW databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| SCHOOL             |
+| sys                |
++--------------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT * FROM student;
+ERROR 1046 (3D000): No database selected
+mysql> CREATE DATABASE SCHOOL;
+ERROR 1007 (HY000): Can't create database 'SCHOOL'; database exists
+mysql> CREATE DATABASE STUDENT;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| SCHOOL             |
+| STUDENT            |
+| sys                |
++--------------------+
+6 rows in set (0.01 sec)
+
+mysql> DROP DATABASE STUDENT;
+Query OK, 0 rows affected (0.10 sec)
+
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| SCHOOL             |
+| sys                |
++--------------------+
+5 rows in set (0.00 sec)
+
+mysql> CREATE DATABASE SCHOOL;
+ERROR 1007 (HY000): Can't create database 'SCHOOL'; database exists
+mysql> USE SCHOOL;
+Database changed
+mysql> CREATE TABLE student(
+    ->     id      int PRIMARY KEY,
+    ->     name    varchar(128),
+    ->     grade   int
+    -> );
+Query OK, 0 rows affected (0.08 sec)
+
+mysql> INSERT INTO student (id,name,grade) VALUES(1001,'山田太郎',1);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> INSERT INTO student (id,name,grade) VALUES(2001,'太田隆',2);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO student (id,name,grade) VALUES(3001,'林敦子',3);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO student (id,name,grade) VALUES(3002,'市川次郎',3);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT * FROM student;
++------+--------------+-------+
+| id   | name         | grade |
++------+--------------+-------+
+| 1001 | 山田太郎     |     1 |
+| 2001 | 太田隆       |     2 |
+| 3001 | 林敦子       |     3 |
+| 3002 | 市川次郎     |     3 |
++------+--------------+-------+
+4 rows in set (0.01 sec)
+
+mysql> SELECT * FROM student;
++------+--------------+-------+
+| id   | name         | grade |
++------+--------------+-------+
+| 1001 | 山田太郎     |     1 |
+| 2001 | 太田隆       |     2 |
+| 3001 | 林敦子       |     3 |
+| 3002 | 市川次郎     |     3 |
++------+--------------+-------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT id,name FROM student;
++------+--------------+
+| id   | name         |
++------+--------------+
+| 1001 | 山田太郎     |
+| 2001 | 太田隆       |
+| 3001 | 林敦子       |
+| 3002 | 市川次郎     |
++------+--------------+
+4 rows in set (0.01 sec)
+
+mysql> CREATE TABLE resource(
+    ->     code        char(6) primary key,
+    ->     name        varchar(40) NOT NULL,
+    ->     class       char(4) NOT NULL,
+    ->     price       int NOT NULL
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> INSERT INTO resource VALUES('100001','英語テキスト','text',2500);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO resource VALUES('100002','数学テキスト','text',2700);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO resource VALUES('100003','国語テキスト','text',3000);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO resource VALUES('100101','英語DVD','mdvd',3000);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO resource VALUES('100102','数学学習ソフト','sftw',4900);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> INSERT INTO resource VALUES('100103','英語学習ソフト','sftw',5400);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO resource VALUES('100201','国語副読本','sbtx',1200);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO resource VALUES('100202','英語問題集','pbbk',2500);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO resource VALUES('100203','数学問題集','pbbk',2800);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO resource VALUES('100C01','英語辞書','dict',8200);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> 
+mysql> SELECT * FROM resource;
++--------+-----------------------+-------+-------+
+| code   | name                  | class | price |
++--------+-----------------------+-------+-------+
+| 100001 | 英語テキスト          | text  |  2500 |
+| 100002 | 数学テキスト          | text  |  2700 |
+| 100003 | 国語テキスト          | text  |  3000 |
+| 100101 | 英語DVD               | mdvd  |  3000 |
+| 100102 | 数学学習ソフト        | sftw  |  4900 |
+| 100103 | 英語学習ソフト        | sftw  |  5400 |
+| 100201 | 国語副読本            | sbtx  |  1200 |
+| 100202 | 英語問題集            | pbbk  |  2500 |
+| 100203 | 数学問題集            | pbbk  |  2800 |
+| 100C01 | 英語辞書              | dict  |  8200 |
++--------+-----------------------+-------+-------+
+10 rows in set (0.02 sec)
+
+mysql> SELECT name,price FROM resource WHERE class='text';
++--------------------+-------+
+| name               | price |
++--------------------+-------+
+| 英語テキスト       |  2500 |
+| 数学テキスト       |  2700 |
+| 国語テキスト       |  3000 |
++--------------------+-------+
+3 rows in set (0.01 sec)
+
+mysql> SELECT name,price FROM resource WHERE price >= 3000 AND price < 5000;
++-----------------------+-------+
+| name                  | price |
++-----------------------+-------+
+| 国語テキスト          |  3000 |
+| 英語DVD               |  3000 |
+| 数学学習ソフト        |  4900 |
++-----------------------+-------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT name,price FROM resource WHERE class='text' OR class='pbbk';
++--------------------+-------+
+| name               | price |
++--------------------+-------+
+| 英語テキスト       |  2500 |
+| 数学テキスト       |  2700 |
+| 国語テキスト       |  3000 |
+| 英語問題集         |  2500 |
+| 数学問題集         |  2800 |
++--------------------+-------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT name,price FROM resource WHERE price BETWEEN 2000 AND 5000;
++-----------------------+-------+
+| name                  | price |
++-----------------------+-------+
+| 英語テキスト          |  2500 |
+| 数学テキスト          |  2700 |
+| 国語テキスト          |  3000 |
+| 英語DVD               |  3000 |
+| 数学学習ソフト        |  4900 |
+| 英語問題集            |  2500 |
+| 数学問題集            |  2800 |
++-----------------------+-------+
+7 rows in set (0.02 sec)
+
+mysql> SELECT name,price FROM resource WHERE class IN ('sftw','pbbk');
++-----------------------+-------+
+| name                  | price |
++-----------------------+-------+
+| 数学学習ソフト        |  4900 |
+| 英語学習ソフト        |  5400 |
+| 英語問題集            |  2500 |
+| 数学問題集            |  2800 |
++-----------------------+-------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT name,price FROM resource WHERE code LIKE '1001%';
++-----------------------+-------+
+| name                  | price |
++-----------------------+-------+
+| 英語DVD               |  3000 |
+| 数学学習ソフト        |  4900 |
+| 英語学習ソフト        |  5400 |
++-----------------------+-------+
+3 rows in set (0.02 sec)
+
+mysql> SELECT * FROM resource WHERE class=(SELECT class FROM resource WHERE price = 2700);
++--------+--------------------+-------+-------+
+| code   | name               | class | price |
++--------+--------------------+-------+-------+
+| 100001 | 英語テキスト       | text  |  2500 |
+| 100002 | 数学テキスト       | text  |  2700 |
+| 100003 | 国語テキスト       | text  |  3000 |
++--------+--------------------+-------+-------+
+3 rows in set (0.01 sec)
+
+mysql> SELECT * FROM resource ORDER BY price ASC;
++--------+-----------------------+-------+-------+
+| code   | name                  | class | price |
++--------+-----------------------+-------+-------+
+| 100201 | 国語副読本            | sbtx  |  1200 |
+| 100001 | 英語テキスト          | text  |  2500 |
+| 100202 | 英語問題集            | pbbk  |  2500 |
+| 100002 | 数学テキスト          | text  |  2700 |
+| 100203 | 数学問題集            | pbbk  |  2800 |
+| 100003 | 国語テキスト          | text  |  3000 |
+| 100101 | 英語DVD               | mdvd  |  3000 |
+| 100102 | 数学学習ソフト        | sftw  |  4900 |
+| 100103 | 英語学習ソフト        | sftw  |  5400 |
+| 100C01 | 英語辞書              | dict  |  8200 |
++--------+-----------------------+-------+-------+
+10 rows in set (0.00 sec)
+
+mysql> SELECT * FROM resource ORDER BY price;
++--------+-----------------------+-------+-------+
+| code   | name                  | class | price |
++--------+-----------------------+-------+-------+
+| 100201 | 国語副読本            | sbtx  |  1200 |
+| 100001 | 英語テキスト          | text  |  2500 |
+| 100202 | 英語問題集            | pbbk  |  2500 |
+| 100002 | 数学テキスト          | text  |  2700 |
+| 100203 | 数学問題集            | pbbk  |  2800 |
+| 100003 | 国語テキスト          | text  |  3000 |
+| 100101 | 英語DVD               | mdvd  |  3000 |
+| 100102 | 数学学習ソフト        | sftw  |  4900 |
+| 100103 | 英語学習ソフト        | sftw  |  5400 |
+| 100C01 | 英語辞書              | dict  |  8200 |
++--------+-----------------------+-------+-------+
+10 rows in set (0.02 sec)
+
+mysql> SELECT * FROM resource ORDER BY price DESC;
++--------+-----------------------+-------+-------+
+| code   | name                  | class | price |
++--------+-----------------------+-------+-------+
+| 100C01 | 英語辞書              | dict  |  8200 |
+| 100103 | 英語学習ソフト        | sftw  |  5400 |
+| 100102 | 数学学習ソフト        | sftw  |  4900 |
+| 100003 | 国語テキスト          | text  |  3000 |
+| 100101 | 英語DVD               | mdvd  |  3000 |
+| 100203 | 数学問題集            | pbbk  |  2800 |
+| 100002 | 数学テキスト          | text  |  2700 |
+| 100001 | 英語テキスト          | text  |  2500 |
+| 100202 | 英語問題集            | pbbk  |  2500 |
+| 100201 | 国語副読本            | sbtx  |  1200 |
++--------+-----------------------+-------+-------+
+10 rows in set (0.01 sec)
+
+mysql> CREATE TABLE score
+    -> (
+    ->     id                          INT NOT NULL,
+    ->     math                        INT NOT NULL,
+    ->     english                     INT NOT NULL,
+    ->     science                     INT NOT NULL
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+
+mysql>  
+mysql> INSERT INTO score ( id, math, english, science ) VALUES (1001,90,80,95);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO score ( id, math, english, science ) VALUES (2001,52,60,100); 
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO score ( id, math, english, science ) VALUES (3001,76,98,64);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO score ( id, math, english, science ) VALUES (3002,30,20,45);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT * FROM score ORDER BY math DESC,english ASC;
++------+------+---------+---------+
+| id   | math | english | science |
++------+------+---------+---------+
+| 1001 |   90 |      80 |      95 |
+| 3001 |   76 |      98 |      64 |
+| 2001 |   52 |      60 |     100 |
+| 3002 |   30 |      20 |      45 |
++------+------+---------+---------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT * FROM score ORDER BY science ASC,english DESC;
++------+------+---------+---------+
+| id   | math | english | science |
++------+------+---------+---------+
+| 3002 |   30 |      20 |      45 |
+| 3001 |   76 |      98 |      64 |
+| 1001 |   90 |      80 |      95 |
+| 2001 |   52 |      60 |     100 |
++------+------+---------+---------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT class FROM resource;
++-------+
+| class |
++-------+
+| text  |
+| text  |
+| text  |
+| mdvd  |
+| sftw  |
+| sftw  |
+| sbtx  |
+| pbbk  |
+| pbbk  |
+| dict  |
++-------+
+10 rows in set (0.00 sec)
+
+mysql> SELECT class FROM resource GROUP BY class;
++-------+
+| class |
++-------+
+| text  |
+| mdvd  |
+| sftw  |
+| sbtx  |
+| pbbk  |
+| dict  |
++-------+
+6 rows in set (0.01 sec)
+
+mysql> 
+mysql> SELECT distinct class FROM resource;
++-------+
+| class |
++-------+
+| text  |
+| mdvd  |
+| sftw  |
+| sbtx  |
+| pbbk  |
+| dict  |
++-------+
+6 rows in set (0.00 sec)
+
+mysql> ELECT class,AVG(price) FROM resource GROUP BY class;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ELECT class,AVG(price) FROM resource GROUP BY class' at line 1
+mysql> ELECT class,AVG(price) FROM resource GROUP BY class;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ELECT class,AVG(price) FROM resource GROUP BY class' at line 1
+mysql> SELECT class,AVG(price) FROM resource GROUP BY class;
++-------+------------+
+| class | AVG(price) |
++-------+------------+
+| text  |  2733.3333 |
+| mdvd  |  3000.0000 |
+| sftw  |  5150.0000 |
+| sbtx  |  1200.0000 |
+| pbbk  |  2650.0000 |
+| dict  |  8200.0000 |
++-------+------------+
+6 rows in set (0.00 sec)
+
+mysql> SELECT class,AVG(price) FROM resource GROUP BY class HAVING count(class) >= 2;
++-------+------------+
+| class | AVG(price) |
++-------+------------+
+| text  |  2733.3333 |
+| sftw  |  5150.0000 |
+| pbbk  |  2650.0000 |
++-------+------------+
+3 rows in set (0.01 sec)
+
+mysql> CREATE TABLE class_name(
+    ->     class       char(4) NOT NULL,
+    ->     name        varchar(10) NOT NULL
+    -> );
+Query OK, 0 rows affected (0.01 sec)
+
+mysql>  INSERT INTO class_name VALUES('text','教科書');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO class_name VALUES('mdvd','マルチメディアDVD');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO class_name VALUES('sftw','ソフトウェア');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO class_name VALUES('sbtx','副読本');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO class_name VALUES('pbbk','問題集');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO class_name VALUES('dict','辞書');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO class_name VALUES('comp','コンピューター');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> 
+mysql> SELECT * FROM resource INNER JOIN class_name ON resource.class = class_name.class;
++--------+-----------------------+-------+-------+-------+--------------------------+
+| code   | name                  | class | price | class | name                     |
++--------+-----------------------+-------+-------+-------+--------------------------+
+| 100001 | 英語テキスト          | text  |  2500 | text  | 教科書                   |
+| 100002 | 数学テキスト          | text  |  2700 | text  | 教科書                   |
+| 100003 | 国語テキスト          | text  |  3000 | text  | 教科書                   |
+| 100101 | 英語DVD               | mdvd  |  3000 | mdvd  | マルチメディアDVD        |
+| 100102 | 数学学習ソフト        | sftw  |  4900 | sftw  | ソフトウェア             |
+| 100103 | 英語学習ソフト        | sftw  |  5400 | sftw  | ソフトウェア             |
+| 100201 | 国語副読本            | sbtx  |  1200 | sbtx  | 副読本                   |
+| 100202 | 英語問題集            | pbbk  |  2500 | pbbk  | 問題集                   |
+| 100203 | 数学問題集            | pbbk  |  2800 | pbbk  | 問題集                   |
+| 100C01 | 英語辞書              | dict  |  8200 | dict  | 辞書                     |
++--------+-----------------------+-------+-------+-------+--------------------------+
+10 rows in set (0.01 sec)
+
+mysql> SELECT * FROM resource INNER JOIN class_name USING(class);
++-------+--------+-----------------------+-------+--------------------------+
+| class | code   | name                  | price | name                     |
++-------+--------+-----------------------+-------+--------------------------+
+| text  | 100001 | 英語テキスト          |  2500 | 教科書                   |
+| text  | 100002 | 数学テキスト          |  2700 | 教科書                   |
+| text  | 100003 | 国語テキスト          |  3000 | 教科書                   |
+| mdvd  | 100101 | 英語DVD               |  3000 | マルチメディアDVD        |
+| sftw  | 100102 | 数学学習ソフト        |  4900 | ソフトウェア             |
+| sftw  | 100103 | 英語学習ソフト        |  5400 | ソフトウェア             |
+| sbtx  | 100201 | 国語副読本            |  1200 | 副読本                   |
+| pbbk  | 100202 | 英語問題集            |  2500 | 問題集                   |
+| pbbk  | 100203 | 数学問題集            |  2800 | 問題集                   |
+| dict  | 100C01 | 英語辞書              |  8200 | 辞書                     |
++-------+--------+-----------------------+-------+--------------------------+
+10 rows in set (0.00 sec)
+
+mysql> SELECT code,resource.name,price,class_name.name FROM resource INNER JOIN class_name USING(class);
++--------+-----------------------+-------+--------------------------+
+| code   | name                  | price | name                     |
++--------+-----------------------+-------+--------------------------+
+| 100001 | 英語テキスト          |  2500 | 教科書                   |
+| 100002 | 数学テキスト          |  2700 | 教科書                   |
+| 100003 | 国語テキスト          |  3000 | 教科書                   |
+| 100101 | 英語DVD               |  3000 | マルチメディアDVD        |
+| 100102 | 数学学習ソフト        |  4900 | ソフトウェア             |
+| 100103 | 英語学習ソフト        |  5400 | ソフトウェア             |
+| 100201 | 国語副読本            |  1200 | 副読本                   |
+| 100202 | 英語問題集            |  2500 | 問題集                   |
+| 100203 | 数学問題集            |  2800 | 問題集                   |
+| 100C01 | 英語辞書              |  8200 | 辞書                     |
++--------+-----------------------+-------+--------------------------+
+10 rows in set (0.00 sec)
+
+mysql> SELECT code,resource.name,price,class_name.name FROM resource INNER JOIN class_name 
+    -> USING(class) WHERE price >= 3000;
++--------+-----------------------+-------+--------------------------+
+| code   | name                  | price | name                     |
++--------+-----------------------+-------+--------------------------+
+| 100003 | 国語テキスト          |  3000 | 教科書                   |
+| 100101 | 英語DVD               |  3000 | マルチメディアDVD        |
+| 100103 | 英語学習ソフト        |  5400 | ソフトウェア             |
+| 100102 | 数学学習ソフト        |  4900 | ソフトウェア             |
+| 100C01 | 英語辞書              |  8200 | 辞書                     |
++--------+-----------------------+-------+--------------------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT * FROM resource CROSS JOIN class_name;
++--------+-----------------------+-------+-------+-------+--------------------------+
+| code   | name                  | class | price | class | name                     |
++--------+-----------------------+-------+-------+-------+--------------------------+
+| 100001 | 英語テキスト          | text  |  2500 | comp  | コンピューター           |
+| 100001 | 英語テキスト          | text  |  2500 | dict  | 辞書                     |
+| 100001 | 英語テキスト          | text  |  2500 | pbbk  | 問題集                   |
+| 100001 | 英語テキスト          | text  |  2500 | sbtx  | 副読本                   |
+| 100001 | 英語テキスト          | text  |  2500 | sftw  | ソフトウェア             |
+| 100001 | 英語テキスト          | text  |  2500 | mdvd  | マルチメディアDVD        |
+| 100001 | 英語テキスト          | text  |  2500 | text  | 教科書                   |
+| 100002 | 数学テキスト          | text  |  2700 | comp  | コンピューター           |
+| 100002 | 数学テキスト          | text  |  2700 | dict  | 辞書                     |
+| 100002 | 数学テキスト          | text  |  2700 | pbbk  | 問題集                   |
+| 100002 | 数学テキスト          | text  |  2700 | sbtx  | 副読本                   |
+| 100002 | 数学テキスト          | text  |  2700 | sftw  | ソフトウェア             |
+| 100002 | 数学テキスト          | text  |  2700 | mdvd  | マルチメディアDVD        |
+| 100002 | 数学テキスト          | text  |  2700 | text  | 教科書                   |
+| 100003 | 国語テキスト          | text  |  3000 | comp  | コンピューター           |
+| 100003 | 国語テキスト          | text  |  3000 | dict  | 辞書                     |
+| 100003 | 国語テキスト          | text  |  3000 | pbbk  | 問題集                   |
+| 100003 | 国語テキスト          | text  |  3000 | sbtx  | 副読本                   |
+| 100003 | 国語テキスト          | text  |  3000 | sftw  | ソフトウェア             |
+| 100003 | 国語テキスト          | text  |  3000 | mdvd  | マルチメディアDVD        |
+| 100003 | 国語テキスト          | text  |  3000 | text  | 教科書                   |
+| 100101 | 英語DVD               | mdvd  |  3000 | comp  | コンピューター           |
+| 100101 | 英語DVD               | mdvd  |  3000 | dict  | 辞書                     |
+| 100101 | 英語DVD               | mdvd  |  3000 | pbbk  | 問題集                   |
+| 100101 | 英語DVD               | mdvd  |  3000 | sbtx  | 副読本                   |
+| 100101 | 英語DVD               | mdvd  |  3000 | sftw  | ソフトウェア             |
+| 100101 | 英語DVD               | mdvd  |  3000 | mdvd  | マルチメディアDVD        |
+| 100101 | 英語DVD               | mdvd  |  3000 | text  | 教科書                   |
+| 100102 | 数学学習ソフト        | sftw  |  4900 | comp  | コンピューター           |
+| 100102 | 数学学習ソフト        | sftw  |  4900 | dict  | 辞書                     |
+| 100102 | 数学学習ソフト        | sftw  |  4900 | pbbk  | 問題集                   |
+| 100102 | 数学学習ソフト        | sftw  |  4900 | sbtx  | 副読本                   |
+| 100102 | 数学学習ソフト        | sftw  |  4900 | sftw  | ソフトウェア             |
+| 100102 | 数学学習ソフト        | sftw  |  4900 | mdvd  | マルチメディアDVD        |
+| 100102 | 数学学習ソフト        | sftw  |  4900 | text  | 教科書                   |
+| 100103 | 英語学習ソフト        | sftw  |  5400 | comp  | コンピューター           |
+| 100103 | 英語学習ソフト        | sftw  |  5400 | dict  | 辞書                     |
+| 100103 | 英語学習ソフト        | sftw  |  5400 | pbbk  | 問題集                   |
+| 100103 | 英語学習ソフト        | sftw  |  5400 | sbtx  | 副読本                   |
+| 100103 | 英語学習ソフト        | sftw  |  5400 | sftw  | ソフトウェア             |
+| 100103 | 英語学習ソフト        | sftw  |  5400 | mdvd  | マルチメディアDVD        |
+| 100103 | 英語学習ソフト        | sftw  |  5400 | text  | 教科書                   |
+| 100201 | 国語副読本            | sbtx  |  1200 | comp  | コンピューター           |
+| 100201 | 国語副読本            | sbtx  |  1200 | dict  | 辞書                     |
+| 100201 | 国語副読本            | sbtx  |  1200 | pbbk  | 問題集                   |
+| 100201 | 国語副読本            | sbtx  |  1200 | sbtx  | 副読本                   |
+| 100201 | 国語副読本            | sbtx  |  1200 | sftw  | ソフトウェア             |
+| 100201 | 国語副読本            | sbtx  |  1200 | mdvd  | マルチメディアDVD        |
+| 100201 | 国語副読本            | sbtx  |  1200 | text  | 教科書                   |
+| 100202 | 英語問題集            | pbbk  |  2500 | comp  | コンピューター           |
+| 100202 | 英語問題集            | pbbk  |  2500 | dict  | 辞書                     |
+| 100202 | 英語問題集            | pbbk  |  2500 | pbbk  | 問題集                   |
+| 100202 | 英語問題集            | pbbk  |  2500 | sbtx  | 副読本                   |
+| 100202 | 英語問題集            | pbbk  |  2500 | sftw  | ソフトウェア             |
+| 100202 | 英語問題集            | pbbk  |  2500 | mdvd  | マルチメディアDVD        |
+| 100202 | 英語問題集            | pbbk  |  2500 | text  | 教科書                   |
+| 100203 | 数学問題集            | pbbk  |  2800 | comp  | コンピューター           |
+| 100203 | 数学問題集            | pbbk  |  2800 | dict  | 辞書                     |
+| 100203 | 数学問題集            | pbbk  |  2800 | pbbk  | 問題集                   |
+| 100203 | 数学問題集            | pbbk  |  2800 | sbtx  | 副読本                   |
+| 100203 | 数学問題集            | pbbk  |  2800 | sftw  | ソフトウェア             |
+| 100203 | 数学問題集            | pbbk  |  2800 | mdvd  | マルチメディアDVD        |
+| 100203 | 数学問題集            | pbbk  |  2800 | text  | 教科書                   |
+| 100C01 | 英語辞書              | dict  |  8200 | comp  | コンピューター           |
+| 100C01 | 英語辞書              | dict  |  8200 | dict  | 辞書                     |
+| 100C01 | 英語辞書              | dict  |  8200 | pbbk  | 問題集                   |
+| 100C01 | 英語辞書              | dict  |  8200 | sbtx  | 副読本                   |
+| 100C01 | 英語辞書              | dict  |  8200 | sftw  | ソフトウェア             |
+| 100C01 | 英語辞書              | dict  |  8200 | mdvd  | マルチメディアDVD        |
+| 100C01 | 英語辞書              | dict  |  8200 | text  | 教科書                   |
++--------+-----------------------+-------+-------+-------+--------------------------+
+70 rows in set (0.00 sec)
+
+mysql> SELECT * FROM resource CROSS JOIN class_name WHERE resource.class = class_name.class;
++--------+-----------------------+-------+-------+-------+--------------------------+
+| code   | name                  | class | price | class | name                     |
++--------+-----------------------+-------+-------+-------+--------------------------+
+| 100001 | 英語テキスト          | text  |  2500 | text  | 教科書                   |
+| 100002 | 数学テキスト          | text  |  2700 | text  | 教科書                   |
+| 100003 | 国語テキスト          | text  |  3000 | text  | 教科書                   |
+| 100101 | 英語DVD               | mdvd  |  3000 | mdvd  | マルチメディアDVD        |
+| 100102 | 数学学習ソフト        | sftw  |  4900 | sftw  | ソフトウェア             |
+| 100103 | 英語学習ソフト        | sftw  |  5400 | sftw  | ソフトウェア             |
+| 100201 | 国語副読本            | sbtx  |  1200 | sbtx  | 副読本                   |
+| 100202 | 英語問題集            | pbbk  |  2500 | pbbk  | 問題集                   |
+| 100203 | 数学問題集            | pbbk  |  2800 | pbbk  | 問題集                   |
+| 100C01 | 英語辞書              | dict  |  8200 | dict  | 辞書                     |
++--------+-----------------------+-------+-------+-------+--------------------------+
+10 rows in set (0.00 sec)
+
+mysql> 
+mysql> CREATE TABLE purchase_history(
+    ->     date DATE NOT NULL,
+    ->     code CHAR(6) NOT NULL,
+    ->     num INT NOT NULL
+    -> );
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> INSERT INTO purchase_history VALUES ('2013/1/13','100001',100);
+Query OK, 1 row affected, 1 warning (0.03 sec)
+
+mysql> INSERT INTO purchase_history VALUES ('2013/1/17','100002',20);
+Query OK, 1 row affected, 1 warning (0.04 sec)
+
+mysql> INSERT INTO purchase_history VALUES ('2013/2/1','100103',31);
+Query OK, 1 row affected, 1 warning (0.00 sec)
+
+mysql> INSERT INTO purchase_history VALUES ('2013/2/3','100101',5);
+Query OK, 1 row affected, 1 warning (0.01 sec)
+
+mysql> INSERT INTO purchase_history VALUES ('2013/3/5','100203',31);
+Query OK, 1 row affected, 1 warning (0.01 sec)
+
+mysql> INSERT INTO purchase_history VALUES ('2013/3/12','100003',13);
+Query OK, 1 row affected, 1 warning (0.00 sec)
+
+mysql> INSERT INTO purchase_history VALUES ('2013/4/30','100201',24);
+Query OK, 1 row affected, 1 warning (0.00 sec)
+
+mysql> INSERT INTO purchase_history VALUES ('2013/5/9','100001',50);
+Query OK, 1 row affected, 1 warning (0.00 sec)
+
+mysql> INSERT INTO purchase_history VALUES ('2013/7/19','100C02',10);
+Query OK, 1 row affected, 1 warning (0.00 sec)
+
+mysql> INSERT INTO purchase_history VALUES ('2013/8/25','100102',5);
+Query OK, 1 row affected, 1 warning (0.00 sec)
+
+mysql> 1
+    -> SELECT * FROM purchase_history LEFT OUTER JOIN resource ON purchase_history.code = resource.code;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '1
+SELECT * FROM purchase_history LEFT OUTER JOIN resource ON purchase_history.co' at line 1
+mysql> SELECT * FROM purchase_history LEFT OUTER JOIN resource ON purchase_history.code = resource.code;
++------------+--------+-----+--------+-----------------------+-------+-------+
+| date       | code   | num | code   | name                  | class | price |
++------------+--------+-----+--------+-----------------------+-------+-------+
+| 2013-01-13 | 100001 | 100 | 100001 | 英語テキスト          | text  |  2500 |
+| 2013-01-17 | 100002 |  20 | 100002 | 数学テキスト          | text  |  2700 |
+| 2013-02-01 | 100103 |  31 | 100103 | 英語学習ソフト        | sftw  |  5400 |
+| 2013-02-03 | 100101 |   5 | 100101 | 英語DVD               | mdvd  |  3000 |
+| 2013-03-05 | 100203 |  31 | 100203 | 数学問題集            | pbbk  |  2800 |
+| 2013-03-12 | 100003 |  13 | 100003 | 国語テキスト          | text  |  3000 |
+| 2013-04-30 | 100201 |  24 | 100201 | 国語副読本            | sbtx  |  1200 |
+| 2013-05-09 | 100001 |  50 | 100001 | 英語テキスト          | text  |  2500 |
+| 2013-07-19 | 100C02 |  10 | NULL   | NULL                  | NULL  |  NULL |
+| 2013-08-25 | 100102 |   5 | 100102 | 数学学習ソフト        | sftw  |  4900 |
++------------+--------+-----+--------+-----------------------+-------+-------+
+10 rows in set (0.00 sec)
+
+mysql> SELECT * FROM purchase_history RIGHT OUTER JOIN resource ON purchase_history.code = resource.code;
++------------+--------+------+--------+-----------------------+-------+-------+
+| date       | code   | num  | code   | name                  | class | price |
++------------+--------+------+--------+-----------------------+-------+-------+
+| 2013-05-09 | 100001 |   50 | 100001 | 英語テキスト          | text  |  2500 |
+| 2013-01-13 | 100001 |  100 | 100001 | 英語テキスト          | text  |  2500 |
+| 2013-01-17 | 100002 |   20 | 100002 | 数学テキスト          | text  |  2700 |
+| 2013-03-12 | 100003 |   13 | 100003 | 国語テキスト          | text  |  3000 |
+| 2013-02-03 | 100101 |    5 | 100101 | 英語DVD               | mdvd  |  3000 |
+| 2013-08-25 | 100102 |    5 | 100102 | 数学学習ソフト        | sftw  |  4900 |
+| 2013-02-01 | 100103 |   31 | 100103 | 英語学習ソフト        | sftw  |  5400 |
+| 2013-04-30 | 100201 |   24 | 100201 | 国語副読本            | sbtx  |  1200 |
+| NULL       | NULL   | NULL | 100202 | 英語問題集            | pbbk  |  2500 |
+| 2013-03-05 | 100203 |   31 | 100203 | 数学問題集            | pbbk  |  2800 |
+| NULL       | NULL   | NULL | 100C01 | 英語辞書              | dict  |  8200 |
++------------+--------+------+--------+-----------------------+-------+-------+
+11 rows in set (0.00 sec)
+
+mysql> SELECT * FROM purchase_history LEFT OUTER JOIN resource USING(code);
++--------+------------+-----+-----------------------+-------+-------+
+| code   | date       | num | name                  | class | price |
++--------+------------+-----+-----------------------+-------+-------+
+| 100001 | 2013-01-13 | 100 | 英語テキスト          | text  |  2500 |
+| 100002 | 2013-01-17 |  20 | 数学テキスト          | text  |  2700 |
+| 100103 | 2013-02-01 |  31 | 英語学習ソフト        | sftw  |  5400 |
+| 100101 | 2013-02-03 |   5 | 英語DVD               | mdvd  |  3000 |
+| 100203 | 2013-03-05 |  31 | 数学問題集            | pbbk  |  2800 |
+| 100003 | 2013-03-12 |  13 | 国語テキスト          | text  |  3000 |
+| 100201 | 2013-04-30 |  24 | 国語副読本            | sbtx  |  1200 |
+| 100001 | 2013-05-09 |  50 | 英語テキスト          | text  |  2500 |
+| 100C02 | 2013-07-19 |  10 | NULL                  | NULL  |  NULL |
+| 100102 | 2013-08-25 |   5 | 数学学習ソフト        | sftw  |  4900 |
++--------+------------+-----+-----------------------+-------+-------+
+10 rows in set (0.00 sec)
+
+mysql> SELECT * FROM purchase_history RIGHT OUTER JOIN resource USING(code);
++--------+-----------------------+-------+-------+------------+------+
+| code   | name                  | class | price | date       | num  |
++--------+-----------------------+-------+-------+------------+------+
+| 100001 | 英語テキスト          | text  |  2500 | 2013-05-09 |   50 |
+| 100001 | 英語テキスト          | text  |  2500 | 2013-01-13 |  100 |
+| 100002 | 数学テキスト          | text  |  2700 | 2013-01-17 |   20 |
+| 100003 | 国語テキスト          | text  |  3000 | 2013-03-12 |   13 |
+| 100101 | 英語DVD               | mdvd  |  3000 | 2013-02-03 |    5 |
+| 100102 | 数学学習ソフト        | sftw  |  4900 | 2013-08-25 |    5 |
+| 100103 | 英語学習ソフト        | sftw  |  5400 | 2013-02-01 |   31 |
+| 100201 | 国語副読本            | sbtx  |  1200 | 2013-04-30 |   24 |
+| 100202 | 英語問題集            | pbbk  |  2500 | NULL       | NULL |
+| 100203 | 数学問題集            | pbbk  |  2800 | 2013-03-05 |   31 |
+| 100C01 | 英語辞書              | dict  |  8200 | NULL       | NULL |
++--------+-----------------------+-------+-------+------------+------+
+11 rows in set (0.00 sec)
+
+mysql> SELECT * FROM purchase_history INNER JOIN resource USING(code);
++--------+------------+-----+-----------------------+-------+-------+
+| code   | date       | num | name                  | class | price |
++--------+------------+-----+-----------------------+-------+-------+
+| 100001 | 2013-01-13 | 100 | 英語テキスト          | text  |  2500 |
+| 100002 | 2013-01-17 |  20 | 数学テキスト          | text  |  2700 |
+| 100103 | 2013-02-01 |  31 | 英語学習ソフト        | sftw  |  5400 |
+| 100101 | 2013-02-03 |   5 | 英語DVD               | mdvd  |  3000 |
+| 100203 | 2013-03-05 |  31 | 数学問題集            | pbbk  |  2800 |
+| 100003 | 2013-03-12 |  13 | 国語テキスト          | text  |  3000 |
+| 100201 | 2013-04-30 |  24 | 国語副読本            | sbtx  |  1200 |
+| 100001 | 2013-05-09 |  50 | 英語テキスト          | text  |  2500 |
+| 100102 | 2013-08-25 |   5 | 数学学習ソフト        | sftw  |  4900 |
++--------+------------+-----+-----------------------+-------+-------+
+9 rows in set (0.00 sec)
+
+mysql> 
